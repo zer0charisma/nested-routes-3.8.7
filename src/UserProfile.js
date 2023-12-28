@@ -1,30 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 
-function UserProfile() {
-  const [user, setUser] = useState({});
-  const { userId } = useParams();
-
-  useEffect(() => {
-    async function loadUser() {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users/${userId}`
-      );
-      const user = await response.json();
-      setUser(user);
-    }
-    loadUser();
-  }, [userId]);
-
-  if (user.id) {
-    return Object.entries(user).map(([key, value]) => (
-      <div key={key}>
-        <label>{key}</label>: {JSON.stringify(value)}
-        <hr />
+export const UserProfile = ({ user = {} }) => {
+  return (
+    <div>
+      <div>
+        <div>
+          <label>User Name</label>
+        </div>
+        <div>{user.username}</div>
       </div>
-    ));
-  }
-  return "Loading...";
-}
+      <hr />
+      <div>
+        <div>
+          <label>EMail</label>
+        </div>
+        <div>{user.email}</div>
+      </div>
+      <hr />
+      <div>
+        <div>
+          <label>Phone</label>
+        </div>
+        <div>{user.phone}</div>
+      </div>
+      <hr />
+      <div>
+        <div>
+          <label>Company</label>
+        </div>
+        <div>{(user.company || {}).name}</div>
+      </div>
+      <hr />
+      <div>
+        <div>
+          <label>Website</label>
+        </div>
+        <div>{user.website}</div>
+      </div>
+      <hr />
+    </div>
+  );
+};
 
 export default UserProfile;
